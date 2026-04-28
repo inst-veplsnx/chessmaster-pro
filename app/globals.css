@@ -1,0 +1,204 @@
+/* Self-hosted fonts — no network requests at dev/build time */
+@import '@fontsource-variable/inter/index.css';
+@import '@fontsource-variable/inter/wght-italic.css';
+@import '@fontsource/playfair-display/400.css';
+@import '@fontsource/playfair-display/400-italic.css';
+@import '@fontsource/playfair-display/700.css';
+@import '@fontsource/playfair-display/700-italic.css';
+@import '@fontsource/playfair-display/800.css';
+@import '@fontsource-variable/jetbrains-mono/index.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ── Light theme: aged ivory + dark walnut ─────────────── */
+  --background: 40 60% 96%; /* #FAF5EB warm cream */
+  --foreground: 25 55% 9%; /* #1E1208 dark walnut */
+  --card: 38 50% 98%; /* #FDFAF4 */
+  --card-foreground: 25 55% 9%;
+  --popover: 38 50% 98%;
+  --popover-foreground: 25 55% 9%;
+  --primary: 25 65% 28%; /* #6B3B10 dark wood amber */
+  --primary-foreground: 40 60% 96%;
+  --secondary: 38 30% 90%; /* #EDE5D5 warm parchment */
+  --secondary-foreground: 25 40% 18%;
+  --muted: 38 22% 91%;
+  --muted-foreground: 30 18% 44%; /* #806647 medium walnut */
+  --accent: 38 30% 90%;
+  --accent-foreground: 25 55% 9%;
+  --destructive: 0 72% 48%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 35 22% 83%; /* #DDD0B9 warm border */
+  --input: 38 22% 91%;
+  --ring: 25 65% 28%;
+  --radius: 0.5rem;
+  --success: 142 60% 38%;
+  --success-foreground: 0 0% 100%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 100%;
+}
+
+.dark {
+  /* ── Dark theme: walnut obsidian + chess gold ──────────── */
+  --background: 22 22% 5%; /* #0E0B08 warm near-black */
+  --foreground: 40 55% 88%; /* #F0E4C8 warm ivory */
+  --card: 22 18% 8%; /* #161009 */
+  --card-foreground: 40 55% 88%;
+  --popover: 22 18% 8%;
+  --popover-foreground: 40 55% 88%;
+  --primary: 43 70% 54%; /* #D4AF37 chess gold */
+  --primary-foreground: 22 40% 7%; /* dark text on gold */
+  --secondary: 25 14% 13%; /* #231D17 warm dark surface */
+  --secondary-foreground: 40 35% 72%;
+  --muted: 22 12% 11%; /* #1D1710 */
+  --muted-foreground: 32 14% 50%; /* #9B8165 warm muted */
+  --accent: 25 14% 13%;
+  --accent-foreground: 40 55% 88%;
+  --destructive: 0 62% 46%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 26 16% 14%; /* #29201A warm border */
+  --input: 22 12% 11%;
+  --ring: 43 70% 54%; /* gold ring */
+  --success: 142 60% 40%;
+  --success-foreground: 0 0% 100%;
+  --warning: 38 85% 52%;
+  --warning-foreground: 22 40% 7%;
+}
+
+/* ── Chess board theme variables ──────────────────────────── */
+:root,
+[data-board-theme='classic'] {
+  --board-light: #f0d9b5;
+  --board-dark: #b58863;
+  --board-highlight-move: rgba(255, 255, 0, 0.38);
+  --board-highlight-check: rgba(239, 68, 68, 0.75);
+  --board-highlight-select: rgba(20, 160, 255, 0.5);
+}
+
+[data-board-theme='marble'] {
+  --board-light: #ece8e0;
+  --board-dark: #8b8680;
+  --board-highlight-move: rgba(255, 220, 0, 0.4);
+  --board-highlight-check: rgba(239, 68, 68, 0.7);
+  --board-highlight-select: rgba(99, 102, 241, 0.5);
+}
+
+[data-board-theme='cyberpunk'] {
+  --board-light: #161625;
+  --board-dark: #0a0a18;
+  --board-highlight-move: rgba(0, 255, 200, 0.28);
+  --board-highlight-check: rgba(255, 20, 100, 0.8);
+  --board-highlight-select: rgba(0, 255, 200, 0.38);
+}
+
+[data-board-theme='tournament'] {
+  --board-light: #fffef0;
+  --board-dark: #6b9a45;
+  --board-highlight-move: rgba(255, 245, 0, 0.45);
+  --board-highlight-check: rgba(220, 30, 30, 0.65);
+  --board-highlight-select: rgba(20, 120, 220, 0.5);
+}
+
+/* ── Base ─────────────────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased font-sans;
+  }
+
+  /* Visible focus rings for keyboard navigation */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  /* Respect reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/40;
+  }
+}
+
+/* ── Chess board utilities ───────────────────────────────── */
+@layer utilities {
+  .board-square-light {
+    background-color: var(--board-light);
+  }
+  .board-square-dark {
+    background-color: var(--board-dark);
+  }
+
+  .board-highlight-move {
+    background-color: var(--board-highlight-move) !important;
+  }
+  .board-highlight-check {
+    background-color: var(--board-highlight-check) !important;
+    animation: check-pulse 0.9s ease-in-out infinite;
+  }
+  .board-highlight-select {
+    background-color: var(--board-highlight-select) !important;
+  }
+
+  /* Chess board grid texture for backgrounds */
+  .chess-texture {
+    background-image: repeating-conic-gradient(hsl(var(--border) / 0.6) 0% 25%, transparent 0% 50%)
+      0 0 / 56px 56px;
+  }
+
+  /* Gold glow */
+  .glow-gold {
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.15);
+  }
+
+  /* Gradient text - gold */
+  .gradient-text {
+    @apply bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent;
+  }
+
+  /* Glass card */
+  .glass {
+    @apply bg-card/80 backdrop-blur-md border border-border/60;
+  }
+}
+
+/* ── Keyframes ───────────────────────────────────────────── */
+@layer base {
+  @keyframes check-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.55;
+    }
+  }
+}
