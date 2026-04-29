@@ -49,6 +49,7 @@ chessmaster-pro/
 ```
 
 ## Getting Started
+*I kindly request you to download and run the project locally, as there were problems with the deployment.*
 
 ### Prerequisites
 
@@ -112,7 +113,6 @@ npm test           # Jest unit tests
 ```
 
 ## Deployment
-*I kindly request you to download and run the project locally, as there were problems with the deployment.*
 
 ### Next.js app → Vercel
 
